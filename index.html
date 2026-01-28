@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AARNAVI — Handcrafted Sarees</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-maroon: #8B1538;
+            --gold: #D4AF37;
+            --cream: #FFF8E7;
+            --warm-white: #FFFEF7;
+            --dark-brown: #3E2723;
+            --burnt-orange: #D2691E;
+            --emerald: #2E7D32;
+            --royal-blue: #1A237E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--warm-white);
+            color: var(--dark-brown);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* Decorative Pattern Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 21, 56, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, var(--warm-white) 0%, rgba(255, 254, 247, 0.98) 80%, transparent 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--deep-maroon);
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '✦';
+            position: absolute;
+            right: -25px;
+            top: -5px;
+            font-size: 0.6rem;
+            color: var(--gold);
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--dark-brown);
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--deep-maroon);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5%;
+            background: 
+                linear-gradient(135deg, rgba(255, 254, 247, 0.95) 0%, rgba(255, 248, 231, 0.9) 100%),
+                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="2" fill="%23D4AF37" opacity="0.1"/><circle cx="25" cy="25" r="1.5" fill="%238B1538" opacity="0.08"/><circle cx="75" cy="75" r="1.5" fill="%238B1538" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23pattern)"/></svg>');
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--deep-maroon);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: var(--dark-brown);
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--deep-maroon), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            opacity: 0.85;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary, .cta-secondary {
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--deep-maroon), #6B0F2A);
+            color: var(--cream);
+            border: none;
+            box-shadow: 0 4px 20px rgba(139, 21, 56, 0.3);
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 21, 56, 0.4);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--deep-maroon);
+            border: 2px solid var(--gold);
+        }
+
+        .cta-secondary:hover {
+            background: var(--gold);
+            color: var(--dark-brown);
+            border-color: var(--gold);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--gold);
+            transform: translate(-15px, -15px);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .hero-image-wrapper::after {
+            content: '✦';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            font-size: 3rem;
+            color: var(--deep-maroon);
+            opacity: 0.2;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Decorative Badge */
+        .decorative-badge {
+            position: absolute;
+            top: 20%;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 2rem;
+            color: var(--dark-brown);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            animation: rotate 20s linear infinite;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Collections Section */
+        .collections {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-label {
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--deep-maroon);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-brown);
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .saree-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .saree-card {
+            position: relative;
+            cursor: pointer;
+            animation: fadeInUp 0.8s ease-out backwards;
+            transition: transform 0.4s ease;
+        }
+
+        .saree-card:nth-child(1) { animation-delay: 0.1s; }
+        .saree-card:nth-child(2) { animation-delay: 0.2s; }
+        .saree-card:nth-child(3) { animation-delay: 0.3s; }
+        .saree-card:nth-child(4) { animation-delay: 0.4s; }
+        .saree-card:nth-child(5) { animation-delay: 0.5s; }
+        .saree-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .saree-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .saree-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .saree-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 21, 56, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1;
+        }
+
+        .saree-card:hover .saree-image-wrapper::before {
+            opacity: 1;
+        }
+
+        .saree-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .saree-card:hover .saree-image {
+            transform: scale(1.08);
+        }
+
+        .saree-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--dark-brown);
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            text-transform: uppercase;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .saree-info {
+            padding: 0 0.5rem;
+        }
+
+        .saree-category {
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--deep-maroon);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .saree-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark-brown);
+        }
+
+        .saree-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            opacity: 0.75;
+        }
+
+        .saree-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--deep-maroon);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--cream) 0%, rgba(255, 248, 231, 0.5) 100%);
+            border-top: 2px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .feature-item:nth-child(1) { animation-delay: 0.1s; }
+        .feature-item:nth-child(2) { animation-delay: 0.2s; }
+        .feature-item:nth-child(3) { animation-delay: 0.3s; }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(139, 21, 56, 0.2));
+        }
+
+        .feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-brown);
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            padding: 5rem 5% 2rem;
+            background: var(--dark-brown);
+            color: var(--cream);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            opacity: 0.85;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.9rem;
+        }
+
+        .footer-section a {
+            color: var(--cream);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--gold);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .decorative-badge {
+                display: none;
+            }
+
+            .hero-image img {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 4%;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            .collections, .features {
+                padding: 4rem 4%;
+            }
+
+            .saree-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            footer {
+                padding: 3rem 4% 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Aarnavi</div>
+        <ul class="nav-links">
+            <li><a href="#collections">Collections</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-subtitle">Handcrafted Heritage</p>
+                <h1>Elegance Woven in <span>Tradition</span></h1>
+                <p class="hero-description">
+                    Discover exquisite handcrafted sarees that celebrate the rich heritage of Indian textiles. Each piece is a masterpiece, woven with love and adorned with timeless elegance.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#collections" class="cta-primary">Explore Collection</a>
+                    <a href="#about" class="cta-secondary">Our Story</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&q=80" alt="Elegant Saree">
+                    <div class="decorative-badge">Handwoven Excellence</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="collections" id="collections">
+        <div class="section-header">
+            <p class="section-label">Curated Collections</p>
+            <h2 class="section-title">Timeless Treasures</h2>
+            <p class="section-description">
+                From traditional Kanjivarams to contemporary silk blends, each saree tells a story of craftsmanship and cultural heritage.
+            </p>
+        </div>
+
+        <div class="saree-grid">
+            <div class="saree-card">
+                <div class="saree-image-wrapper">
+                    <div class="saree-badge">Bestseller</div>
+                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80" alt="Banarasi Silk Saree" class="saree-image">
+                </div>
+                <div class="saree-info">
+                    <p class="saree-category">Banarasi Silk</p>
+                    <h3 class="saree-name">Royal Crimson Brocade</h3>
+                    <p class="saree-description">Pure silk saree with intricate gold zari work and traditional motifs</p>
+                    <p class="saree-price">₹32,500</p>
+                </div>
+            </div>
+
+            <div class="saree-card">
+                <div class="saree-image-wrapper">
+                    <div class="saree-badge">New Arrival</div>
+                    <img src="https://images.unsplash.com/photo-1583391733956-6c78b6ec7a9f?w=800&q=80" alt="Kanjivaram Saree" class="saree-image">
+                </div>
+                <div class="saree-info">
+                    <p class="saree-category">Kanjivaram</p>
+                    <h3 class="saree-name">Golden Temple Weave</h3>
+                    <p class="saree-description">Handwoven Kanjivaram with traditional temple border design</p>
+                    <p class="saree-price">₹45,000</p>
+                </div>
+            </div>
+
+            <div class="saree-card">
+                <div class="saree-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&q=80" alt="Chanderi Saree" class="saree-image">
+                </div>
+                <div class="saree-info">
+                    <p class="saree-category">Chanderi Silk</p>
+                    <h3 class="saree-name">Ethereal Ivory</h3>
+                    <p class="saree-description">Lightweight Chanderi with delicate butis and silver border</p>
+                    <p class="saree-price">₹18,500</p>
+                </div>
+            </div>
+
+            <div class="saree-card">
+                <div class="saree-image-wrapper">
+                    <div class="saree-badge">Limited Edition</div>
+                    <img src="https://images.unsplash.com/photo-1583391733981-5ead224fc871?w=800&q=80" alt="Patola Saree" class="saree-image">
+                </div>
+                <div class="saree-info">
+                    <p class="saree-category">Patola Silk</p>
+                    <h3 class="saree-name">Heritage Geometric</h3>
+                    <p class="saree-description">Double ikat weave with vibrant geometric patterns</p>
+                    <p class="saree-price">₹65,000</p>
+                </div>
+            </div>
+
+            <div class="saree-card">
+                <div class="saree-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1617189828407-c8dde2826275?w=800&q=80" alt="Tussar Silk Saree" class="saree-image">
+                </div>
+                <div class="saree-info">
+                    <p class="saree-category">Tussar Silk</p>
+                    <h3 class="saree-name">Earthy Elegance</h3>
+                    <p class="saree-description">Natural tussar with hand-painted Madhubani art</p>
+                    <p class="saree-price">₹22,000</p>
+                </div>
+            </div>
+
+            <div class="saree-card">
+                <div class="saree-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1585846416120-3a7354ed7d39?w=800&q=80" alt="Mysore Silk Saree" class="saree-image">
+                </div>
+                <div class="saree-info">
+                    <p class="saree-category">Mysore Silk</p>
+                    <h3 class="saree-name">Emerald Dream</h3>
+                    <p class="saree-description">Pure Mysore silk with traditional zari border and peacock motifs</p>
+                    <p class="saree-price">₹28,500</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Handcrafted Excellence</h3>
+                <p class="feature-description">Every saree is meticulously handwoven by master artisans using traditional techniques passed down through generations.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">Authentic Materials</h3>
+                <p class="feature-description">We source the finest pure silk, cotton, and natural fibers directly from weavers across India.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🌸</div>
+                <h3 class="feature-title">Timeless Designs</h3>
+                <p class="feature-description">Our collections blend traditional motifs with contemporary aesthetics for the modern woman.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Aarnavi</h3>
+                <p>Celebrating the art of traditional Indian handloom sarees. Each piece is a testament to India's rich textile heritage and the skilled hands that create them.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Collections</h3>
+                <ul>
+                    <li><a href="#">Banarasi Silk</a></li>
+                    <li><a href="#">Kanjivaram</a></li>
+                    <li><a href="#">Chanderi</a></li>
+                    <li><a href="#">Patola</a></li>
+                    <li><a href="#">Designer Sarees</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Customer Care</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Care Instructions</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                    <li><a href="#">WhatsApp</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Aarnavi Handcrafted Sarees. Woven with Love in India.</p>
+        </div>
+    </footer>
+</body>
+</html>
